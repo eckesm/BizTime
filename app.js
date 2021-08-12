@@ -1,31 +1,41 @@
 /** BizTime express application. */
 
-
-const express = require("express");
-
+const express = require('express');
 const app = express();
-const ExpressError = require("./expressError")
+const ExpressError = require('./expressError');
 
+// Parse request bodies for JSON
 app.use(express.json());
 
+// Include router routes
+const companiesRoutes = require('./routes/companies');
+app.use('/companies', companiesRoutes);
 
 /** 404 handler */
-
 app.use(function(req, res, next) {
-  const err = new ExpressError("Not Found", 404);
-  return next(err);
+	const err = new ExpressError('Not Found', 404);
+	return next(err);
 });
 
 /** general error handler */
-
 app.use((err, req, res, next) => {
-  res.status(err.status || 500);
+	// res.status(err.status || 500);
 
-  return res.json({
-    error: err,
-    message: err.message
-  });
+	// return res.json({
+	// 	error   : err,
+	// 	message : err.message
+	// });
+
+	// the default status is 500 Internal Server Error
+	let status = err.status || 500;
+
+	// set the status and alert the user
+	return res.status(status).json({
+		error : {
+			message : err.message,
+			status  : status
+		}
+	});
 });
-
 
 module.exports = app;
