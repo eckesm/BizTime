@@ -87,9 +87,8 @@ describe('POST /invoices', () => {
 
 const updateTestInvoice = {
 	comp_code : 'apple',
-	amt       : 500
-	// paid      : false,
-	// paid_date : null
+	amt       : 500,
+	paid      : false
 };
 describe('PUT /invoices', () => {
 	test('Update a single invoice', async () => {
@@ -97,13 +96,11 @@ describe('PUT /invoices', () => {
 		expect(res.statusCode).toBe(200);
 		expect(res.body).toEqual({
 			invoice : {
-				// ...updateTestInvoice,
 				...testInvoice,
 				id        : testInvoice.id,
 				add_date  : expect.any(String),
 				amt       : updateTestInvoice.amt,
-				// paid      : updateTestInvoice.paid,
-				// paid_date : expect.any(String),
+				paid      : updateTestInvoice.paid,
 				paid_date : null
 			}
 		});

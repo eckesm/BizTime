@@ -41,7 +41,7 @@ describe('GET /companies/:id', () => {
 });
 
 const newTestCompany = {
-	code        : 'msft',
+	code        : 'microsoft',
 	name        : 'Microsoft',
 	description : 'Makers of Microsoft.'
 };
